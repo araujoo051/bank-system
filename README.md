@@ -14,28 +14,6 @@ This is a simple banking system implemented in Python. It allows registering peo
 - Simple input validation
 - Interactive terminal menu
 
-## Project Structure
-bank-system/
-│
-├── data/ # CSV files for data storage
-│ ├── person.csv
-│ ├── banks.csv
-│ └── accounts.csv
-│
-├── models/ # Domain classes
-│ ├── bank.py
-│ ├── person.py
-│ ├── bank_account.py
-│ ├── current_account.py
-│ └── savings_account.py
-│
-├── persistence/ # CSV loading and saving functions
-│ └── storage.py
-│
-├── main.py # Main script with menu interface
-│
-└── README.md # This file
-
 ## How to Run
 
 1. Clone the repository:
