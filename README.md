@@ -21,7 +21,7 @@ This is a simple banking system implemented in Python. It allows registering peo
 ```bash
 git clone https://github.com/your_username/bank-system.git
 cd bank-system
-```bash
+```
 Make sure Python 3 is installed.
 
 Run the program:
