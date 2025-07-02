@@ -21,7 +21,10 @@ class CurrentAccount(BankAccount):
         return f"Monthly fee deducted. New balance: R$ {self._balance:.2f}"
         
     def info_account(self):
-        return super().info_account()
+        return (
+            f"{self.__class__.__name__} - Number: {self._number}, "
+            f"Balance: R${self._balance:.2f}, Bank: {self._bank.name}"
+        )
     
     @property
     def monthly_fee(self):
@@ -33,6 +36,29 @@ class CurrentAccount(BankAccount):
             raise ValueError("Monthly fee must be non-negative.")
         self._monthly_fee = value
     
+    def to_csv_row(self):
+        return [
+            "CurrentAccount",
+            self._holder.cpf,
+            self._bank.cnpj,
+            str(self._number),
+            str(self._balance),
+            self._password,
+            str(self.monthly_fee)
+        ]
+
+    @classmethod
+    def from_csv_row(cls, row, person_list, bank_list):
+        _, cpf, cnpj, number, balance, password, monthly_fee = row
+
+        holder = next((p for p in person_list if p.cpf == cpf), None)
+        bank = next((b for b in bank_list if b.cnpj == cnpj), None)
+
+        if not holder or not bank:
+            return None
+
+        return cls(holder, bank, int(number), float(balance), password, float(monthly_fee))
+
     @classmethod
     def from_input(cls, person_list, bank_list):
         print("Creating a new Current Account...")

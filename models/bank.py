@@ -5,6 +5,7 @@ class Bank():
         self._number = number
         self._accounts = []
 
+
     def info_bank(self):
         return (
         f"Bank Name: {self._name}\n"
@@ -22,6 +23,11 @@ class Bank():
             self._accounts.remove(account)
         else:
             print("Account not found in the bank.")
+
+    def list_accounts(self):
+        if not self._accounts:
+            return "No accounts in this bank."
+        return "\n".join(account.info_account() for account in self._accounts)
         
     @property
     def name(self):
@@ -62,6 +68,7 @@ class Bank():
     def to_csv_row(self):
         return [self._name, self._cnpj, str(self._number)]
     
+    @classmethod
     def from_csv_row(cls, row):
         name, cnpj, number = row
         return cls(name, cnpj, int(number))

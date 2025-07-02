@@ -12,8 +12,9 @@ class Person():
             f"Second Name: {self._second_name}\n"
             f"Age: {self._age}\n"
             f"CPF: {self._cpf}\n"
-            f"Accounts: {self._accounts}\n"
+            f"Accounts:\n" + "\n".join(account.info_account() for account in self._accounts)
         )
+
     
     def info_accounts(self):
         if not self._accounts:

@@ -71,3 +71,13 @@ class BankAccount(ABC):
     @password.setter
     def password(self, value):
         self._password = value
+
+    def to_csv_row(self):
+        return [
+            self.__class__.__name__,
+            self._holder.cpf,
+            self._bank.cnpj,
+            str(self._number),
+            str(self._balance),
+            self._password
+        ]

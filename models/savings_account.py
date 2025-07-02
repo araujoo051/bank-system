@@ -18,6 +18,14 @@ class SavingsAccount(BankAccount):
         self._balance += self._balance * self._revenue
         self._monthly_sakes = 0
 
+    def info_account(self):
+        return (
+            f"{self.__class__.__name__} - Number: {self._number}, "
+            f"Balance: R${self._balance:.2f}, Bank: {self._bank.name}, "
+            f"Monthly Revenue: {self._revenue:.4f}, "
+            f"Monthly Withdrawals: {self._monthly_sakes}"
+        )
+
     @property
     def revenue(self):
         return self._revenue
@@ -30,7 +38,7 @@ class SavingsAccount(BankAccount):
     
     @classmethod
     def from_input(cls, person_list, bank_list):
-        print("Creating a new Current Account...")
+        print("Creating a new Savings Account...")
 
         cpf = input("CPF from holder: ").strip()
         holder = next((p for p in person_list if p.cpf == cpf), None)
@@ -50,5 +58,29 @@ class SavingsAccount(BankAccount):
         revenue = float(input("Monthly interest rate (e.g. 0.02 for 2%): "))
 
         return cls(holder, bank, number, balance, password, revenue)
+    
+    def to_csv_row(self):
+        return [
+            "SavingsAccount",
+            self._holder.cpf,
+            self._bank.cnpj,
+            str(self._number),
+            str(self._balance),
+            self._password,
+            str(self._revenue),
+            str(self._monthly_sakes)
+        ]
+    
+    @classmethod
+    def from_csv_row(cls, row, person_list, bank_list):
+        _, cpf, cnpj, number, balance, password, revenue, monthly_sakes = row
+        holder = next((p for p in person_list if p.cpf == cpf), None)
+        bank = next((b for b in bank_list if b.cnpj == cnpj), None)
 
+        if not holder or not bank:
+            return None
+        
+        account = cls(holder, bank, int(number), float(balance), password, float(revenue))
+        account._monthly_sakes = int(monthly_sakes)
+        return account
 
